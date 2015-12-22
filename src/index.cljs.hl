@@ -1,0 +1,70 @@
+(page "index.html"
+      (:require [silicone.paper :as paper]
+                [silicone.iron  :as iron]
+                [goog.dom]))
+
+(def route (route-cell "#/home"))
+(defc greeting "Welcome!")
+
+(html {:lang "en"}
+      (head
+       (html-meta :charset "utf-8")
+       (title "Polymer Starter Kit")
+       (link :rel "icon" :sizes "192x192" :href "images/touch/chrome-touch-icon-192x192.png")
+       (link :rel "apple-touch-icon" :href "images/touch/apple-touch-icon.png")
+       (link :rel "stylesheet" :href "styles/main.css")
+       (link :rel "import" :href "elements/elements.html")
+       (iron/import-elements)
+       (paper/import-elements))
+      (body {:unresolved "" :class [:fullbleed]}
+            (paper/paper-drawer-panel
+             (paper/paper-header-panel
+              {:drawer ""}
+              (paper/paper-toolbar {:id "drawerToolbar"}
+                                   (span :class "paper-font-title" "Menu"))
+              (paper/paper-menu {:class "list" :attr-for-selected "data-route" :selected "[[route]]"}
+                                (a {:data-route "home" :href "#/home"}
+                                   (iron/iron-icon :icon "home")
+                                   (span "Home"))
+                                (a {:data-route "users" :href "#/users"}
+                                   (iron/iron-icon :icon "info")
+                                   (span "Users"))
+                                (a {:data-route "contact" :href "#/contact"}
+                                   (iron/iron-icon :icon "mail")
+                                   (span "Contact"))))
+             (paper/paper-header-panel
+              {:main ""}
+              (paper/paper-toolbar {:id "mainToolbar"}
+                                   (paper/paper-icon-button :id "paperToggle" :icon "menu" :paper-drawer-toggle "")
+                                   (span :class "flex")
+                                   (paper/paper-icon-button :icon "refresh")
+                                   (paper/paper-icon-button :icon "search")
+                                   (div {:class "middle middle-container center horizontal layout"}
+                                        (div :class "app-name" "Polymer Starter Kit"))
+                                   (div :class "bottom bottom-container center horizontal layout")
+                                   (div :class "bottom-title paper-font-subhead" "The future of the web today"))
+              (div {:class "content"}
+                   (iron/iron-pages {:id "iron-pages" :attr-for-selected "data-route"}
+                                    (section {:data-route "#/home"}
+                                             (paper/paper-material {:elevation "1"}
+                                                                   (h2 :class "page-title" (cell= greeting))
+                                                                   (span :class "paper-font-body2" "Update text to change the greeting.")
+                                                                   (input :class "paper-font-body2" :value greeting :change #(reset! greeting @%))
+                                                                   (p :class "paper-font-subhead" "You now have: A Hoplon/Polymer Demo App")
+                                                                   (p :class "paper-font-body2" "Looking for more Web App layouts? Check out our "
+                                                                      (a :href "https://github.com/PolymerElements/app-layout-templates" "layouts")
+                                                                      "collection. You can also"
+                                                                      (a :href "http://polymerelements.github.io/app-layout-templates/" "preview")
+                                                                      "them live."))
+                                                  (paper/paper-material {:elevation "1"}
+                                                                  (p :class "paper-font-body2" "This is another card.")))
+                                         (section {:data-route "#/users"}
+                                                  (paper/paper-material {:elevation "1"}
+                                                                  (h2 :class "page-title" "Users")
+                                                                  (p "This is the users section")))
+                                         (section {:data-route "#/contact"}
+                                                  (paper/paper-material {:elevation "1"}
+                                                                  (h2 :class "page-title" "Contact")
+                                                                  (p "This is the contact section")))))))))
+
+(cell= (.setAttribute (goog.dom.getElement "iron-pages") "selected" route))
