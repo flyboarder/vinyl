@@ -12,7 +12,7 @@
                   [hoplon/javelin            "3.8.4"]
                   [hoplon/castra             "3.0.0-alpha1"]
                   [degree9/silicone          "0.3.0"]
-                  [degree9/boot-bower        "0.2.3"]
+                  [degree9/boot-bower        "0.3.0"]
                   [degree9/boot-semver       "1.2.0"  :scope "test"]]
  :resource-paths #{"src" "resources/assets"})
 
