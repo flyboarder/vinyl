@@ -13,9 +13,8 @@
        (link :rel "icon" :sizes "192x192" :href "images/touch/chrome-touch-icon-192x192.png")
        (link :rel "apple-touch-icon" :href "images/touch/apple-touch-icon.png")
        (link :rel "stylesheet" :href "styles/main.css")
-       (link :rel "import" :href "elements/elements.html")
-       (iron/import-elements)
-       (paper/import-elements))
+       (link :rel "import" :href "elements.html")
+       )
       (body {:unresolved "" :class [:fullbleed]}
             (paper/paper-drawer-panel
              (paper/paper-header-panel
@@ -67,4 +66,4 @@
                                                                   (h2 :class "page-title" "Contact")
                                                                   (p "This is the contact section")))))))))
 
-(cell= (.setAttribute (goog.dom.getElement "iron-pages") "selected" route))
+;(cell= (.setAttribute (goog.dom.getElement "iron-pages") "selected" route))

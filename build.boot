@@ -6,13 +6,14 @@
                   [ring                      "1.4.0"]
                   [ring/ring-defaults        "0.1.5"]
                   [hiccup                    "1.0.5"]
-                  [pandeiro/boot-http        "0.7.1-SNAPSHOT"]
-                  [hoplon/boot-hoplon        "0.1.10"]
+                  [pandeiro/boot-http        "0.7.0"]
+                  [hoplon/boot-hoplon        "0.1.13"]
                   [hoplon/hoplon             "6.0.0-alpha11"]
                   [hoplon/javelin            "3.8.4"]
                   [hoplon/castra             "3.0.0-alpha1"]
-                  [degree9/silicone          "0.3.0"]
-                  [degree9/boot-bower        "0.3.0"]
+                  [degree9/silicone          "0.6.0-SNAPSHOT"]
+                  [degree9/boot-polymer      "0.2.0-SNAPSHOT"]
+                  [degree9/boot-bower        "0.5.0-SNAPSHOT"]
                   [degree9/boot-semver       "1.2.0"  :scope "test"]]
  :resource-paths #{"src" "resources/assets"})
 
@@ -21,7 +22,9 @@
  '[hoplon.boot-hoplon :refer :all]
  '[pandeiro.boot-http :refer :all]
  '[boot-semver.core   :refer :all]
- '[degree9.boot-bower :refer [bower]])
+ '[degree9.boot-exec :refer :all]
+ '[degree9.boot-bower :refer :all]
+ '[degree9.boot-polymer :refer :all])
 
 (task-options!
  pom {:project 'degree9/vinyl
@@ -32,10 +35,10 @@
 (deftask bower-deps
   "Fetch bower deps."
   []
-  (bower :install {:polymer        "Polymer/polymer#^1.2.0"
-                   :iron-elements  "PolymerElements/iron-elements#master"
+  (bower :install {:iron-elements  "PolymerElements/iron-elements#master"
                    :paper-elements "PolymerElements/paper-elements#master"
-                   :neon-elements  "PolymerElements/neon-elements#master"}))
+                   :neon-elements  "PolymerElements/neon-elements#master"
+                   }))
 
 (deftask build
   "Compile sources"
@@ -53,7 +56,7 @@
    (version)
    (bower-deps)
    (watch)
+   (polymer)
+   ;(show :fileset true)
    (build)
-   (serve :handler 'vinyl.app/app
-          :reload true
-          :port 8080)))
+   (serve :reload true :port 8080)))
